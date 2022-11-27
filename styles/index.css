@@ -4,7 +4,7 @@ body {
     font-family: 'Poppins';
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    gap: 4rem;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -27,23 +27,23 @@ body {
     display: flex;
     flex-direction: column;
     width: 22rem;
-    height: 20rem;
+    height: 23rem;
     background-color: rgb(12, 14, 151);
-    padding-bottom: 1rem;
+    /* padding-bottom: 1rem; */
     border-radius: 5px;
 }
 
 .container-header {
-    background-color: rgb(24, 79, 150);
+    background-color: rgb(30, 32, 34);
     text-align: center;
     color: rgb(252, 239, 239);
     padding: .5rem 1rem;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: .8rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    position: relative;
 }
 
 .container-content {
@@ -56,8 +56,9 @@ body {
 .container-task {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
+    gap: .5rem;
+    padding: 0 .6rem;
+    max-width: 100%;
     min-height: 2.5rem;
     background-color: aliceblue;
     margin-top: .7rem;
@@ -65,6 +66,7 @@ body {
     border-radius: 2px;
     cursor: pointer;
     transition-duration: .3s;
+    font-weight: 500;
 }
 
 .container-task:hover {
@@ -85,6 +87,47 @@ body {
         'GRAD' 0,
         'opsz' 48;
     cursor: pointer;
+}
+
+.user{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;   
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.user .welcome{
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.user .auth{
+    cursor: pointer;
+}
+
+.user .auth:hover{
+    text-decoration: underline;
+}
+
+.container-header .input_field{
+    display: none;
+    top:-4rem;
+    right: 5px;
+    position: absolute;
+    transition: all ease-in;
+    transition-duration: .3s;
+}
+
+.container-header .input_field .current_task{
+    width: 20rem;
+    height: 3rem;
+    border: 3px solid grey;
+    font-size: 1.25rem;
+    padding-left: 1rem;
+}
+.container-header .input_field .current_task:focus{
+    border: 5px solid blue;
 }
 
 @media only screen and (max-width: 800px)  {
