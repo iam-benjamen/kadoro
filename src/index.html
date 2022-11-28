@@ -32,41 +32,45 @@
                 class="current_task"
                 type="text"
                 placeholder="Press enter after typing..."
+                <!--
+                onchange="handleChange(this)"
+                --
+              />
               />
             </form>
           </div>
         </div>
-        <div class="container-content">
-          <div class="container-task">
-            <span class="material-symbols-outlined"> menu </span>Lorem ipsum
+
+        <div class="container-content" id="current_container">
+          <div class="container-task" draggable="true">
+            <span class="material-symbols-outlined"> menu </span>Igun ipsum
             dolor sit amet krate .
           </div>
-          <div class="container-task">
+          <div class="container-task" draggable="true">
+            <span class="material-symbols-outlined"> menu </span>Lorep ipsum
+            dolor sit amet unmir.
+          </div>
+          <div class="container-task" draggable="true">
+            <span class="material-symbols-outlined"> menu </span>sdfem ipsum
+            dolor sit amet unmir.
+          </div>
+          <div class="container-task" draggable="true">
+            <span class="material-symbols-outlined"> menu </span>asmfa ipsum
+            dolor sit amet unmir.
+          </div>
+          <div class="container-task" draggable="true">
+            <span class="material-symbols-outlined"> menu </span>onasdf ipsum
+            dolor sit amet unmir.
+          </div>
+          <div class="container-task" draggable="true">
             <span class="material-symbols-outlined"> menu </span>Lorem ipsum
             dolor sit amet unmir.
           </div>
-          <div class="container-task">
-            <span class="material-symbols-outlined"> menu </span>Lorem ipsum
-            dolor sit amet unmir.
-          </div>
-          <div class="container-task">
-            <span class="material-symbols-outlined"> menu </span>Lorem ipsum
-            dolor sit amet unmir.
-          </div>
-          <div class="container-task">
-            <span class="material-symbols-outlined"> menu </span>Lorem ipsum
-            dolor sit amet unmir.
-          </div>
-          <div class="container-task">
-            <span class="material-symbols-outlined"> menu </span>Lorem ipsum
-            dolor sit amet unmir.
-          </div>
-         
         </div>
-        <!-- <div class="container-content">
-          <div class="no_ongoing_task">No task available</div>
-        </div> -->
+
+        <div class="no_task">No task available</div>
       </div>
+
       <div class="container">
         <div class="container-header">
           <h2>Ongoing Tasks</h2>
@@ -84,10 +88,11 @@
             </form>
           </div>
         </div>
-        <div class="container-content">
-          <div class="no_ongoing_task">No ongoing task</div>
+        <div class="container-content" id="ongoing_container">
+          <div class="no_task">No ongoing task</div>
         </div>
       </div>
+
       <div class="container">
         <div class="container-header">
           <h2>Completed Tasks</h2>
@@ -105,8 +110,9 @@
             </form>
           </div>
         </div>
-        <div class="container-content">
-          <div class="no_ongoing_task">No completed task</div>
+
+        <div class="container-content" id="completed_container">
+          <div class="no_task">No completed task</div>
         </div>
       </div>
     </main>
