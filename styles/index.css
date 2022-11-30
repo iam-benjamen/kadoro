@@ -7,12 +7,13 @@ body {
     gap: 4rem;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 110vh;
     background-color: beige;
 }
 
 .title {
     font-size: 2rem;
+    text-align: center;
 }
 
 .outer-container {
@@ -91,62 +92,65 @@ body {
     cursor: pointer;
 }
 
-.user{
+.user {
     display: flex;
     justify-content: space-between;
-    width: 90%;   
+    width: 90%;
     padding-left: 2rem;
     padding-right: 2rem;
 }
 
-.user .welcome{
+.user .welcome {
     font-size: 1.25rem;
     font-weight: 500;
 }
 
-.user .auth{
+.user .auth {
     cursor: pointer;
 }
 
-.user .auth:hover{
+.user .auth:hover {
     text-decoration: underline;
 }
 
-.container-header .input_field{
+.container-header .input_field {
     display: none;
-    top:-4rem;
+    top: -4rem;
     right: 5px;
     position: absolute;
-    transition: all ease-in;
+    transition: all ease-in-out;
     transition-duration: .3s;
+    transition-property: all;
 }
 
-.container-header .input_field .current_task{
+.container-header .input_field .current_task {
     width: 20rem;
     height: 3rem;
     border: 3px solid grey;
     font-size: 1.25rem;
     padding-left: 1rem;
 }
-.container-header .input_field .current_task:focus{
+
+.container-header .input_field .current_task:focus {
     border: 5px solid blue;
 }
 
-.dragging{
+.dragging {
     opacity: 0.5;
     border: 1px solid green;
 }
 
 
-.no_task{
+.no_task {
     display: none;
     color: white;
     text-align: center;
     margin-top: 40%;
 }
 
-@media only screen and (max-width: 800px)  {
-   body{
-    height: max-content;
-   }
+
+@media only screen and (max-width: 800px) {
+    body {
+        height: max-content;
+    }
 }

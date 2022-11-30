@@ -12,8 +12,47 @@ const inputCompleted = document.querySelector("#completed_task_input");
 const tasks = document.querySelectorAll(".container-task");
 const containers = document.querySelectorAll(".container-content");
 const noTask = document.querySelector(".no_task");
+const currentContainer = document.querySelector("#current_container");
 
+const current_form = document.querySelector(".first_form");
+const current_field = document.querySelector("#first_input");
 
+let current;
+
+const content = [
+  "I will cook and wash",
+  "Go to church and worship",
+  "Remain celibate till marriage",
+  "call my babe",
+];
+
+// content.forEach((item) => {
+//   currentContainer.insertAdjacentHTML(
+//     "afterend",
+//     `<div class="container-task" draggable="true">
+//       <span class="material-symbols-outlined"> menu </span>${item}
+//     </div>`
+//   );
+// });
+
+current_field.addEventListener("change", (e) => {
+  current = e.target.value;
+});
+
+current_form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  current_field.value = "";
+  inputCurrent.style.display = "none";
+
+  const task = document.createElement("div");
+  task.innerHTML = `<div class="container-task" draggable="true">
+       <span class="material-symbols-outlined"> menu </span>${current}
+     </div>`
+  
+  currentContainer.append(task);
+});
+
+// Operations on container
 function monitorContainer() {
   containers.forEach((container) => {
     if (container.children.length <= 1) {
@@ -27,7 +66,7 @@ function monitorContainer() {
     }
   });
 
-  tasks.forEach(item => {
+  tasks.forEach((item) => {
     const parent = item.parentElement;
 
     if (parent.id === "current_container") {
@@ -41,7 +80,7 @@ function monitorContainer() {
     if (parent.id === "completed_container") {
       item.style.border = "2px solid green";
     }
-  })
+  });
 }
 
 monitorContainer();
@@ -56,7 +95,6 @@ tasks.forEach((item) => {
     item.classList.remove("dragging");
     monitorContainer();
   });
-  
 });
 
 containers.forEach((container) => {
@@ -66,7 +104,7 @@ containers.forEach((container) => {
     const afterElement = getDragAFterElement(container, e.clientY);
     const draggable = document.querySelector(".dragging");
 
-    if (afterElement == null) {
+    if (afterElement === null) {
       container.appendChild(draggable);
     } else {
       container.insertBefore(draggable, afterElement);
@@ -91,10 +129,10 @@ function getDragAFterElement(container, y) {
       }
     },
     { offset: Number.NEGATIVE_INFINITY }
-    //Show input field on click and focus auto
   ).element;
 }
 
+//Show input field on click and focus auto
 const handleAddClick = (element, input) => {
   element.addEventListener("click", () => {
     const current_display = getComputedStyle(input).display;
