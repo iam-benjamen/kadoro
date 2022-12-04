@@ -31,6 +31,7 @@ const completed_field = document.querySelector("#third_input");
 
 //Others
 const tasks = document.querySelectorAll(".container-task");
+
 const containers = document.querySelectorAll(".container-content");
 const noTask = document.querySelector(".no_task");
 
@@ -40,24 +41,24 @@ let completedValue = "";
 
 //Some dummy Data
 const currentContent = [
-  "I will cook and wash",
-  "Go to church and worship",
-  "Remain celibate till marriage",
-  "call my babe",
+  // "I will cook and wash",
+  // "Go to church and worship",
+  // "Remain celibate till marriage",
+  // "call my babe",
 ];
 
 const ongoingContent = [
-  "I will sing and dance",
-  "Go to church and dance",
-  "Remain happy till marriage",
-  "call my mum",
+  // "I will sing and dance",
+  // "Go to church and dance",
+  // "Remain happy till marriage",
+  // "call my mum",
 ];
 
 const completedContent = [
-  "I will sing and dance",
-  "Go to church and dance",
-  "Remain happy till marriage",
-  "call my mum",
+  // "I will sing and dance",
+  // "Go to church and dance",
+  // "Remain happy till marriage",
+  // "call my mum",
 ];
 
 //Loop through data and output result
@@ -67,21 +68,42 @@ function outputData(content, container) {
   content.forEach((item) => {
     container.innerHTML += `
     <div class="container-task" draggable="true">
-      <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>${item}
+      <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>
+      ${item}
       <span class="material-symbols-outlined" id="delete_icon"> delete </span>
     </div>`;
   });
 
+  deleteTasks(content);
+
+  const tasks = document.querySelectorAll(".container-task");
+  console.log(tasks);
+}
+
+function deleteTasks(content) {
   //delete task
   const deleteIcons = document.querySelectorAll("#delete_icon");
 
   deleteIcons.forEach((icon) => {
     icon.addEventListener("click", function () {
+      const value = this.parentElement.textContent
+        .replace("drag_handle", "")
+        .replace("delete", "")
+        .trim();
+
+      content = content.filter((item) => {
+        item !== value;
+      });
+
       this.parentElement.remove();
+
+      const tasks = document.querySelectorAll(".container-task");
+      console.log(tasks);
       monitorContainer();
     });
   });
 }
+
 outputData(currentContent, currentContainer);
 outputData(ongoingContent, ongoingContainer);
 outputData(completedContent, completedContainer);
@@ -97,8 +119,7 @@ function handleFormOperations(
 ) {
   //input field change
   field.addEventListener("change", (e) => {
-    formValue = e.target.value;
-    console.log(formValue)
+    formValue = e.target.value.trim();
   });
 
   //form submit - create task
@@ -164,6 +185,7 @@ handleAddClick(addBtnOngoing, inputOngoing);
 handleAddClick(addBtnCompleted, inputCompleted);
 monitorContainer();
 dragDrop();
+
 //Approach
 // 1. Implement CRUD
 // 2. Data Storage

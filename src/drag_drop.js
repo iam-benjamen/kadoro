@@ -3,13 +3,15 @@ import monitorContainer from "./monitor.js";
 //Implementing Drag and Drop functionality
 
 function dragDrop() {
+  monitorContainer()
   const tasks = document.querySelectorAll(".container-task");
+  
   const containers = document.querySelectorAll(".container-content");
-
-
+  
   tasks.forEach((item) => {
     item.addEventListener("dragstart", () => {
       item.classList.add("dragging");
+      console.log(item.classList)
     });
 
     item.addEventListener("dragend", () => {
@@ -19,13 +21,14 @@ function dragDrop() {
   });
 
   containers.forEach((container) => {
+  
     container.addEventListener("dragover", (e) => {
       e.preventDefault();
 
       const afterElement = getDragAFterElement(container, e.clientY);
       const draggable = document.querySelector(".dragging");
 
-      if (afterElement === null) {
+      if (afterElement === null || afterElement === undefined) {
         container.appendChild(draggable);
       } else {
         container.insertBefore(draggable, afterElement);
