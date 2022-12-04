@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kadoro</title>
-    <script defer src="../src/index.js"></script>
+    <script type="module" defer src="../src/index.js"></script>
     <link rel="stylesheet" href="../styles//index.css" />
     <link
       rel="stylesheet"
@@ -14,8 +14,10 @@
   </head>
   <body>
     <div class="user">
-      <p class="welcome">Welcome Ben, <br />Take it up from where you left!</p>
-      <p class="auth">Sign out</p>
+      <p class="welcome">Welcome, Ben</p>
+      <p class="auth">
+        <span class="material-symbols-outlined"> logout </span>Log out
+      </p>
     </div>
     <h1 class="title">Kadoro <br />Drag & Drop enabled</h1>
     <main class="outer-container">
@@ -27,7 +29,7 @@
           </span>
 
           <div class="input_field" id="current_task_input">
-            <form action="" class="first_form">
+            <form class="first_form">
               <input
                 class="current_task"
                 id="first_input"
@@ -39,31 +41,6 @@
         </div>
 
         <div class="container-content" id="current_container">
-          <!-- <div class="container-task" draggable="true">
-            <span class="material-symbols-outlined"> menu </span>Igun ipsum
-            dolor sit amet krate .
-          </div>
-          <div class="container-task" draggable="true">
-            <span class="material-symbols-outlined"> menu </span>Lorep ipsum
-            dolor sit amet unmir.
-          </div>
-          <div class="container-task" draggable="true">
-            <span class="material-symbols-outlined"> menu </span>sdfem ipsum
-            dolor sit amet unmir.
-          </div>
-          <div class="container-task" draggable="true">
-            <span class="material-symbols-outlined" id="drag_icon"> menu </span
-            >asmfa ipsum dolor sit amet unmir.
-          </div>
-          <div class="container-task" draggable="true">
-            <span class="material-symbols-outlined"> menu </span>onasdf ipsum
-            dolor sit amet unmir.
-          </div>
-          <div class="container-task" draggable="true">
-            <span class="material-symbols-outlined"> menu </span>Lorem ipsum
-            dolor sit amet unmir.
-          </div> -->
-
           <div class="no_task">No task available</div>
         </div>
       </div>
@@ -76,10 +53,11 @@
           </span>
 
           <div class="input_field" id="ongoing_task_input">
-            <form action="">
+            <form class="second_form">
               <input
                 class="current_task"
                 type="text"
+                id="second_input"
                 placeholder="Press enter after typing..."
               />
             </form>
@@ -98,9 +76,10 @@
           </span>
 
           <div class="input_field" id="completed_task_input">
-            <form action="">
+            <form class="third_form">
               <input
                 class="current_task"
+                id="third_input"
                 type="text"
                 placeholder="Press enter after typing..."
               />

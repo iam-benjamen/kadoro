@@ -1,136 +1,149 @@
+import dragDrop from "./drag_drop.js";
+import monitorContainer from "./monitor.js";
+
 //Elements
+// Add Buttons
 const addBtnCurrent = document.querySelector("#add_current_task");
 const addBtnOngoing = document.querySelector("#add_ongoing_task");
 const addBtnCompleted = document.querySelector("#add_completed_task");
 
 const inputField = document.querySelector(".input_field");
 
+//Input fields display
 const inputCurrent = document.querySelector("#current_task_input");
 const inputOngoing = document.querySelector("#ongoing_task_input");
 const inputCompleted = document.querySelector("#completed_task_input");
 
-const tasks = document.querySelectorAll(".container-task");
-const containers = document.querySelectorAll(".container-content");
-const noTask = document.querySelector(".no_task");
+//Containers
 const currentContainer = document.querySelector("#current_container");
+const ongoingContainer = document.querySelector("#ongoing_container");
+const completedContainer = document.querySelector("#completed_container");
 
+//Forms and Input
 const current_form = document.querySelector(".first_form");
 const current_field = document.querySelector("#first_input");
 
-let current;
+const ongoing_form = document.querySelector(".second_form");
+const ongoing_field = document.querySelector("#second_input");
 
-const content = [
+const completed_form = document.querySelector(".third_form");
+const completed_field = document.querySelector("#third_input");
+
+//Others
+const tasks = document.querySelectorAll(".container-task");
+const containers = document.querySelectorAll(".container-content");
+const noTask = document.querySelector(".no_task");
+
+let currentValue = "";
+let ongoingValue = "";
+let completedValue = "";
+
+//Some dummy Data
+const currentContent = [
   "I will cook and wash",
   "Go to church and worship",
   "Remain celibate till marriage",
   "call my babe",
 ];
 
-// content.forEach((item) => {
-//   currentContainer.insertAdjacentHTML(
-//     "afterend",
-//     `<div class="container-task" draggable="true">
-//       <span class="material-symbols-outlined"> menu </span>${item}
-//     </div>`
-//   );
-// });
+const ongoingContent = [
+  "I will sing and dance",
+  "Go to church and dance",
+  "Remain happy till marriage",
+  "call my mum",
+];
 
-current_field.addEventListener("change", (e) => {
-  current = e.target.value;
-});
+const completedContent = [
+  "I will sing and dance",
+  "Go to church and dance",
+  "Remain happy till marriage",
+  "call my mum",
+];
 
-current_form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  current_field.value = "";
-  inputCurrent.style.display = "none";
+//Loop through data and output result
+function outputData(content, container) {
+  container.innerHTML = ` <div class="no_task">No tasks here</div>`;
 
-  const task = document.createElement("div");
-  task.innerHTML = `<div class="container-task" draggable="true">
-       <span class="material-symbols-outlined"> menu </span>${current}
-     </div>`
-  
-  currentContainer.append(task);
-});
-
-// Operations on container
-function monitorContainer() {
-  containers.forEach((container) => {
-    if (container.children.length <= 1) {
-      container.children[0].style.display = "block";
-    } else {
-      [...container.children].forEach((child) => {
-        if (child.classList.contains("no_task")) {
-          child.style.display = "none";
-        }
-      });
-    }
+  content.forEach((item) => {
+    container.innerHTML += `
+    <div class="container-task" draggable="true">
+      <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>${item}
+      <span class="material-symbols-outlined" id="delete_icon"> delete </span>
+    </div>`;
   });
 
-  tasks.forEach((item) => {
-    const parent = item.parentElement;
+  //delete task
+  const deleteIcons = document.querySelectorAll("#delete_icon");
 
-    if (parent.id === "current_container") {
-      item.style.border = "2px solid orange";
-    }
-
-    if (parent.id === "ongoing_container") {
-      item.style.border = "2px solid yellow";
-    }
-
-    if (parent.id === "completed_container") {
-      item.style.border = "2px solid green";
-    }
+  deleteIcons.forEach((icon) => {
+    icon.addEventListener("click", function () {
+      this.parentElement.remove();
+      monitorContainer();
+    });
   });
 }
+outputData(currentContent, currentContainer);
+outputData(ongoingContent, ongoingContainer);
+outputData(completedContent, completedContainer);
 
-monitorContainer();
-
-//Implementing Drag and Drop functionality
-tasks.forEach((item) => {
-  item.addEventListener("dragstart", () => {
-    item.classList.add("dragging");
+//Handle Form change and Data
+function handleFormOperations(
+  form,
+  field,
+  formValue,
+  input,
+  content,
+  container
+) {
+  //input field change
+  field.addEventListener("change", (e) => {
+    formValue = e.target.value;
+    console.log(formValue)
   });
 
-  item.addEventListener("dragend", () => {
-    item.classList.remove("dragging");
-    monitorContainer();
-  });
-});
-
-containers.forEach((container) => {
-  container.addEventListener("dragover", (e) => {
+  //form submit - create task
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const afterElement = getDragAFterElement(container, e.clientY);
-    const draggable = document.querySelector(".dragging");
-
-    if (afterElement === null) {
-      container.appendChild(draggable);
+    if (formValue !== "") {
+      field.value = "";
+      input.style.display = "none";
+      content.push(`${formValue}`);
     } else {
-      container.insertBefore(draggable, afterElement);
+      alert("cannot be empty");
     }
+
+    outputData(content, container);
+    monitorContainer();
   });
-});
-
-function getDragAFterElement(container, y) {
-  const draggableElements = [
-    ...container.querySelectorAll(".container-task:not(.dragging)"),
-  ];
-
-  return draggableElements.reduce(
-    (closest, child) => {
-      const box = child.getBoundingClientRect();
-      const offset = y - box.top - box.height / 2;
-
-      if (offset < 0 && offset > closest.offset) {
-        return { offset: offset, element: child };
-      } else {
-        return closest;
-      }
-    },
-    { offset: Number.NEGATIVE_INFINITY }
-  ).element;
 }
+
+handleFormOperations(
+  current_form,
+  current_field,
+  currentValue,
+  inputCurrent,
+  currentContent,
+  currentContainer
+);
+
+handleFormOperations(
+  ongoing_form,
+  ongoing_field,
+  ongoingValue,
+  inputOngoing,
+  ongoingContent,
+  ongoingContainer
+);
+
+handleFormOperations(
+  completed_form,
+  completed_field,
+  completedValue,
+  inputCompleted,
+  completedContent,
+  completedContainer
+);
 
 //Show input field on click and focus auto
 const handleAddClick = (element, input) => {
@@ -149,16 +162,10 @@ const handleAddClick = (element, input) => {
 handleAddClick(addBtnCurrent, inputCurrent);
 handleAddClick(addBtnOngoing, inputOngoing);
 handleAddClick(addBtnCompleted, inputCompleted);
-
-// const handleChange = (ev) => {
-//   console.log(ev.target.value);
-// };
-
-//Features to be iplemented
-/* 
-1. Users can add tasks to any of the three columns by clicking add button
-2. Tasks summaries are displayed and details unveiled on click(a modal), with an edit button to persist
-3. User data is persisted as it is being edited. (indexdb/Firebase to be used)
-4. Drag and drop functionality is implemented which mutates user data
-5. Simple FIrebase Auth to ensure user uniqueness, signup and signin 
-*/
+monitorContainer();
+dragDrop();
+//Approach
+// 1. Implement CRUD
+// 2. Data Storage
+// 3. Implement Drag and Drop
+// 4. Authentication
