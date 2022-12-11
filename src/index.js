@@ -1,7 +1,7 @@
 import dragDrop from "./drag_drop.js";
 import monitorContainer from "./monitor.js";
+import updateContent from "./update_content.js"
 
-//Elements
 // Add Buttons
 const addBtnCurrent = document.querySelector("#add_current_task");
 const addBtnOngoing = document.querySelector("#add_ongoing_task");
@@ -30,8 +30,7 @@ const completed_form = document.querySelector(".third_form");
 const completed_field = document.querySelector("#third_input");
 
 //Others
-const tasks = document.querySelectorAll(".container-task");
-
+let tasks = document.querySelectorAll(".container-task");
 const containers = document.querySelectorAll(".container-content");
 const noTask = document.querySelector(".no_task");
 
@@ -39,29 +38,7 @@ let currentValue = "";
 let ongoingValue = "";
 let completedValue = "";
 
-//Some dummy Data
-const currentContent = [
-  // "I will cook and wash",
-  // "Go to church and worship",
-  // "Remain celibate till marriage",
-  // "call my babe",
-];
-
-const ongoingContent = [
-  // "I will sing and dance",
-  // "Go to church and dance",
-  // "Remain happy till marriage",
-  // "call my mum",
-];
-
-const completedContent = [
-  // "I will sing and dance",
-  // "Go to church and dance",
-  // "Remain happy till marriage",
-  // "call my mum",
-];
-
-//Loop through data and output result
+//Loop through data and output result and apply drag&Drop functionality
 function outputData(content, container) {
   container.innerHTML = ` <div class="no_task">No tasks here</div>`;
 
@@ -74,49 +51,12 @@ function outputData(content, container) {
     </div>`;
   });
 
-  deleteTasks(content);
 
-  const tasks = document.querySelectorAll(".container-task");
-  console.log(tasks);
 }
 
-function deleteTasks(content) {
-  //delete task
-  const deleteIcons = document.querySelectorAll("#delete_icon");
-
-  deleteIcons.forEach((icon) => {
-    icon.addEventListener("click", function () {
-      const value = this.parentElement.textContent
-        .replace("drag_handle", "")
-        .replace("delete", "")
-        .trim();
-
-      content = content.filter((item) => {
-        item !== value;
-      });
-
-      this.parentElement.remove();
-
-      const tasks = document.querySelectorAll(".container-task");
-      console.log(tasks);
-      monitorContainer();
-    });
-  });
-}
-
-outputData(currentContent, currentContainer);
-outputData(ongoingContent, ongoingContainer);
-outputData(completedContent, completedContainer);
 
 //Handle Form change and Data
-function handleFormOperations(
-  form,
-  field,
-  formValue,
-  input,
-  content,
-  container
-) {
+function handleFormOperations(form, field, formValue, input, container) {
   //input field change
   field.addEventListener("change", (e) => {
     formValue = e.target.value.trim();
@@ -129,13 +69,19 @@ function handleFormOperations(
     if (formValue !== "") {
       field.value = "";
       input.style.display = "none";
-      content.push(`${formValue}`);
+
+      container.innerHTML += `
+      <div class="container-task" draggable="true">
+        <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>
+        ${formValue}
+        <span class="material-symbols-outlined" id="delete_icon"> delete </span>
+      </div>`;
+      monitorContainer();
     } else {
       alert("cannot be empty");
     }
 
-    outputData(content, container);
-    monitorContainer();
+    updateContent();
   });
 }
 
@@ -144,7 +90,6 @@ handleFormOperations(
   current_field,
   currentValue,
   inputCurrent,
-  currentContent,
   currentContainer
 );
 
@@ -153,7 +98,6 @@ handleFormOperations(
   ongoing_field,
   ongoingValue,
   inputOngoing,
-  ongoingContent,
   ongoingContainer
 );
 
@@ -162,7 +106,6 @@ handleFormOperations(
   completed_field,
   completedValue,
   inputCompleted,
-  completedContent,
   completedContainer
 );
 
@@ -184,10 +127,12 @@ handleAddClick(addBtnCurrent, inputCurrent);
 handleAddClick(addBtnOngoing, inputOngoing);
 handleAddClick(addBtnCompleted, inputCompleted);
 monitorContainer();
-dragDrop();
 
 //Approach
 // 1. Implement CRUD
 // 2. Data Storage
 // 3. Implement Drag and Drop
 // 4. Authentication
+
+
+updateContent();

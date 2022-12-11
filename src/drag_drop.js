@@ -1,27 +1,25 @@
 import monitorContainer from "./monitor.js";
+import updateContent from "./update_content.js";
 
 //Implementing Drag and Drop functionality
-
-function dragDrop() {
-  monitorContainer()
-  const tasks = document.querySelectorAll(".container-task");
+function dragDrop(tasks) {
   
   const containers = document.querySelectorAll(".container-content");
-  
+  // console.log(tasks, containers)
+   
   tasks.forEach((item) => {
     item.addEventListener("dragstart", () => {
       item.classList.add("dragging");
-      console.log(item.classList)
     });
 
     item.addEventListener("dragend", () => {
       item.classList.remove("dragging");
       monitorContainer();
+      updateContent()
     });
   });
 
   containers.forEach((container) => {
-  
     container.addEventListener("dragover", (e) => {
       e.preventDefault();
 
@@ -35,7 +33,10 @@ function dragDrop() {
       }
     });
   });
+
+
 }
+
 
 function getDragAFterElement(container, y) {
   const draggableElements = [
