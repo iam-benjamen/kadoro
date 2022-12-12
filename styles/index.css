@@ -7,13 +7,17 @@ body {
     gap: 4rem;
     align-items: center;
     justify-content: center;
-    height: 110vh;
+    height: 130vh;
     background-color: rgb(247, 247, 247);
 }
 
 .title {
     font-size: 2rem;
     text-align: center;
+}
+
+.title h1{
+    margin: 0;
 }
 
 .outer-container {
@@ -101,11 +105,14 @@ body {
     width: 90%;
     padding-left: 2rem;
     padding-right: 2rem;
+    position: absolute;
+    top: 1rem;
 }
 
 .user .welcome {
     font-size: 1.25rem;
     font-weight: 500;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #delete_icon {
@@ -118,10 +125,13 @@ body {
     color: rgb(146, 8, 8);
 }
 
-/* #draggable_icon{
-    width: .5rem;
-} */
+.enabled{
+    font-size: 1rem;
+}
+
 .user .auth {
+    display: flex;
+    align-items: center;
     cursor: pointer;
 }
 
@@ -156,17 +166,30 @@ body {
     border: 1px solid green;
 }
 
-
 .no_task {
-    /* display: none; */
     color: white;
     text-align: center;
     margin-top: 40%;
 }
 
+#footer_link{
+    color: rgb(120, 120, 214);
+}
 
 @media only screen and (max-width: 800px) {
     body {
         height: max-content;
+    }
+
+    #delete_icon{
+        display: block;
+    }
+
+    .title{
+        margin-top: 5rem;
+    }
+
+    .container{
+        width: 80%;
     }
 }

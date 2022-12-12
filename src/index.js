@@ -1,5 +1,7 @@
+import deleteTasks from "./delete_task.js";
 import monitorContainer from "./monitor.js";
-import updateContent from "./update_content.js";
+import handleFormOperations from "./handle_form.js";
+
 
 // Add Buttons
 const addBtnCurrent = document.querySelector("#add_current_task");
@@ -54,6 +56,7 @@ function outputData() {
       ;
     }
     monitorContainer();
+    deleteTasks(content)
   });
 }
 
@@ -62,37 +65,7 @@ window.addEventListener("load", () => {
   outputData();
 });
 
-
-//Handle Form change and Data
-function handleFormOperations(form, field, formValue, input, container) {
-  //input field change
-  field.addEventListener("change", (e) => {
-    formValue = e.target.value.trim();
-  });
-
-  //form submit - create task
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    if (formValue !== "") {
-      field.value = "";
-      input.style.display = "none";
-
-      container.innerHTML += `
-      <div class="container-task" draggable="true">
-        <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>
-        ${formValue}
-        <span class="material-symbols-outlined" id="delete_icon"> delete </span>
-      </div>`;
-      monitorContainer();
-    } else {
-      alert("cannot be empty");
-    }
-
-    updateContent();
-  });
-}
-
+//Form operations
 handleFormOperations(
   current_form,
   current_field,
@@ -134,7 +107,8 @@ const handleAddClick = (element, input) => {
 handleAddClick(addBtnCurrent, inputCurrent);
 handleAddClick(addBtnOngoing, inputOngoing);
 handleAddClick(addBtnCompleted, inputCompleted);
-monitorContainer();
+
+
 
 //Approach
 // 1. Implement CRUD DONE
