@@ -1,6 +1,6 @@
 import dragDrop from "./drag_drop.js";
 import monitorContainer from "./monitor.js";
-import updateContent from "./update_content.js"
+import updateContent from "./update_content.js";
 
 // Add Buttons
 const addBtnCurrent = document.querySelector("#add_current_task");
@@ -39,21 +39,34 @@ let ongoingValue = "";
 let completedValue = "";
 
 //Loop through data and output result and apply drag&Drop functionality
-function outputData(content, container) {
-  container.innerHTML = ` <div class="no_task">No tasks here</div>`;
+function outputData() {
+  containers.forEach((container) => {
+    const key = container.id.split("_")[0];
+    const content = localStorage.getItem(key).split(",");
+    console.log(content);
 
-  content.forEach((item) => {
-    container.innerHTML += `
-    <div class="container-task" draggable="true">
-      <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>
-      ${item}
-      <span class="material-symbols-outlined" id="delete_icon"> delete </span>
-    </div>`;
+    if (!content || content[0] === "") {
+      container.innerHTML = ` <div class="no_task">No tasks here</div>`;
+    } else {
+      content.forEach((item) => {
+        container.innerHTML += `
+          <div class="container-task" draggable="true">
+            <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>
+            ${item}
+            <span class="material-symbols-outlined" id="delete_icon"> delete </span>
+          </div>`;
+      });
+      ;
+    }
+    monitorContainer();
   });
-
-
 }
 
+window.addEventListener("load", () => {
+  outputData();
+});
+
+//for each of the containers, pull data from local storage and update it
 
 //Handle Form change and Data
 function handleFormOperations(form, field, formValue, input, container) {
@@ -129,10 +142,24 @@ handleAddClick(addBtnCompleted, inputCompleted);
 monitorContainer();
 
 //Approach
-// 1. Implement CRUD
-// 2. Data Storage
-// 3. Implement Drag and Drop
+// 1. Implement CRUD DONE
+// 2. Data Storage DONE
+// 3. Implement Drag and Drop DONE
 // 4. Authentication
 
+// updateContent();
 
-updateContent();
+// 430 - Wake up, stretch & brush
+// 445 - Read 10-15 pages of your current book
+// 515 - write (journal your thoughts)
+// 530 - Do something cognitively tasking (code, solve a programming or math problem)
+// 630 - get ready for the day
+// 700 to 1000 daily activities
+//1100 - sleep
+
+//WEEK AHEAD
+
+//TWO TESTS, PRACTICALS, CLASSES, PRESENTATION
+//FINISH KADORO
+//START GES 102 & TEL 334
+//PUBLISH AN ARTICLE

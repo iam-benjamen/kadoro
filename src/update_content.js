@@ -1,5 +1,6 @@
 import deleteTasks from "./delete_task.js";
 import dragDrop from "./drag_drop.js";
+import monitorContainer from "./monitor.js";
 
 //A function to update content list when it is added, dragged or deleted.
 function updateContent() {
@@ -25,8 +26,9 @@ function updateContent() {
 
   collection.forEach((array) => {
     array[0].forEach((item) => {
+
       if (item.classList.contains("no_task")) {
-        console.log("empty!");
+        saveToLocalStorage(item, [array[1]]);
       }
 
       if (!item.classList.contains("no_task")) {
@@ -36,13 +38,25 @@ function updateContent() {
           .trim();
 
         array[1].push(value);
-        console.log(array[1]);
+        saveToLocalStorage(item, [array[1]]);
         deleteTasks(array[1]);
       }
     });
   });
-    const tasks = document.querySelectorAll(".container-task");
-    dragDrop(tasks);
+  monitorContainer()
 }
 
-export default updateContent
+function saveToLocalStorage(item, data) {
+  if (item.parentElement.id === "current_container") {
+    localStorage.setItem("current", data);
+  }
+
+  if (item.parentElement.id === "ongoing_container") {
+    localStorage.setItem("ongoing", data);
+  }
+
+  if (item.parentElement.id === "completed_container") {
+    localStorage.setItem("completed", data);
+  }
+}
+export default updateContent;

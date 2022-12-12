@@ -5,8 +5,7 @@ import updateContent from "./update_content.js";
 function dragDrop(tasks) {
   
   const containers = document.querySelectorAll(".container-content");
-  // console.log(tasks, containers)
-   
+
   tasks.forEach((item) => {
     item.addEventListener("dragstart", () => {
       item.classList.add("dragging");

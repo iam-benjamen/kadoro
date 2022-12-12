@@ -1,3 +1,6 @@
+import dragDrop from "./drag_drop.js";
+
+
 function monitorContainer() {
   const tasks = document.querySelectorAll(".container-task");
   const containers = document.querySelectorAll(".container-content");
@@ -40,6 +43,8 @@ function monitorContainer() {
       item.style.border = "2px solid green";
     }
   });
+
+  dragDrop(tasks);
 }
 
 export default monitorContainer;
