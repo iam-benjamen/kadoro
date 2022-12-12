@@ -1,4 +1,3 @@
-import dragDrop from "./drag_drop.js";
 import monitorContainer from "./monitor.js";
 import updateContent from "./update_content.js";
 
@@ -6,8 +5,6 @@ import updateContent from "./update_content.js";
 const addBtnCurrent = document.querySelector("#add_current_task");
 const addBtnOngoing = document.querySelector("#add_ongoing_task");
 const addBtnCompleted = document.querySelector("#add_completed_task");
-
-const inputField = document.querySelector(".input_field");
 
 //Input fields display
 const inputCurrent = document.querySelector("#current_task_input");
@@ -30,20 +27,18 @@ const completed_form = document.querySelector(".third_form");
 const completed_field = document.querySelector("#third_input");
 
 //Others
-let tasks = document.querySelectorAll(".container-task");
 const containers = document.querySelectorAll(".container-content");
-const noTask = document.querySelector(".no_task");
-
 let currentValue = "";
 let ongoingValue = "";
 let completedValue = "";
+
 
 //Loop through data and output result and apply drag&Drop functionality
 function outputData() {
   containers.forEach((container) => {
     const key = container.id.split("_")[0];
     const content = localStorage.getItem(key).split(",");
-    console.log(content);
+   
 
     if (!content || content[0] === "") {
       container.innerHTML = ` <div class="no_task">No tasks here</div>`;
@@ -62,11 +57,11 @@ function outputData() {
   });
 }
 
+//for each of the containers, pull data from local storage and update it
 window.addEventListener("load", () => {
   outputData();
 });
 
-//for each of the containers, pull data from local storage and update it
 
 //Handle Form change and Data
 function handleFormOperations(form, field, formValue, input, container) {
@@ -147,7 +142,6 @@ monitorContainer();
 // 3. Implement Drag and Drop DONE
 // 4. Authentication
 
-// updateContent();
 
 // 430 - Wake up, stretch & brush
 // 445 - Read 10-15 pages of your current book
