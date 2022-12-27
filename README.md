@@ -1,6 +1,6 @@
 # kadoro
-An drag and drop enabled task tracker.
-Built with Vanilla Javascript,Firebase and Webpack.
-In construction.
+An drag and drop enabled task manager.
+Built with Vanilla Javascript,Firebase and Parcel.
 
-![image](https://user-images.githubusercontent.com/88411228/206968146-7853cdc5-38ca-49fa-a001-4a1efda345eb.png)
+
+![image](https://user-images.githubusercontent.com/88411228/209109170-601fe981-0d1f-4abf-83cc-79c495337c7e.png)
