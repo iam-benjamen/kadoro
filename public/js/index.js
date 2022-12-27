@@ -2,7 +2,6 @@ import deleteTasks from "./delete_task.js";
 import monitorContainer from "./monitor.js";
 import handleFormOperations from "./handle_form.js";
 
-
 // Add Buttons
 const addBtnCurrent = document.querySelector("#add_current_task");
 const addBtnOngoing = document.querySelector("#add_ongoing_task");
@@ -27,20 +26,31 @@ const ongoing_field = document.querySelector("#second_input");
 
 const completed_form = document.querySelector(".third_form");
 const completed_field = document.querySelector("#third_input");
- 
+
 //Others
 const containers = document.querySelectorAll(".container-content");
+const welcomeUser = document.querySelector(".welcome");
+
 let currentValue = "";
 let ongoingValue = "";
 let completedValue = "";
 
+//for each of the containers, pull data from local storage and update it
+window.addEventListener("load", () => {
+  outputData();
+  const user_name = localStorage.getItem("kadoro_name").split(" ");
+  console.log(user_name)
+
+  if (user_name) {
+    welcomeUser.textContent = `Welcome ${user_name[1] || user_name[0]}`;
+  }
+});
 
 //Loop through data and output result and apply drag&Drop functionality
 function outputData() {
   containers.forEach((container) => {
     const key = container.id.split("_")[0];
     const content = localStorage.getItem(key).split(",");
-   
 
     if (!content || content[0] === "") {
       container.innerHTML = ` <div class="no_task">No tasks here</div>`;
@@ -53,17 +63,11 @@ function outputData() {
             <span class="material-symbols-outlined" id="delete_icon"> delete </span>
           </div>`;
       });
-      ;
     }
     monitorContainer();
-    deleteTasks(content)
+    deleteTasks(content);
   });
 }
-
-//for each of the containers, pull data from local storage and update it
-window.addEventListener("load", () => {
-  outputData();
-});
 
 //Form operations
 handleFormOperations(
@@ -108,11 +112,8 @@ handleAddClick(addBtnCurrent, inputCurrent);
 handleAddClick(addBtnOngoing, inputOngoing);
 handleAddClick(addBtnCompleted, inputCompleted);
 
-
-
 //Approach
 // 1. Implement CRUD DONE
 // 2. Data Storage DONE
 // 3. Implement Drag and Drop DONE
 // 4. Auth & store
-

@@ -1,17 +1,13 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
-// Add Firebase products that you want to use
-
+const button = document.querySelector(".login");
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
-} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
-
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+  onAuthStateChanged,
+} from "firebase/auth";
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyC4cu5j1p5m3semI46XpD3EtvONxRquec0",
   authDomain: "kadoro-5161a.firebaseapp.com",
@@ -25,12 +21,35 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
-// const provider = new GoogleAuthProvider();
+const app = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
 
-ui.start(".auth_tab", {
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  ],
+//Add Event Listener on Click
+button.addEventListener("click", () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+
+      console.log(user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+
+      console.log(errorMessage);
+    });
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    localStorage.setItem("kadoro_name", user.displayName);
+    window.history.pushState({}, "", "http://localhost:8000/kadoro");
+  } else {
+    console.log(false);
+  }
 });
