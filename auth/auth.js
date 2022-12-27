@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC4cu5j1p5m3semI46XpD3EtvONxRquec0",
@@ -20,10 +21,12 @@ const firebaseConfig = {
     "692243734013-gk1ung03fmpf2khidc9i7jkucqpjn9kt.apps.googleusercontent.com",
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
+
 
 //Add Event Listener on Click
 button.addEventListener("click", () => {
@@ -45,10 +48,12 @@ button.addEventListener("click", () => {
     });
 });
 
+//handle auth change status
 onAuthStateChanged(auth, (user) => {
   if (user) {
     localStorage.setItem("kadoro_name", user.displayName);
     window.history.pushState({}, "", "http://localhost:8000/kadoro");
+    window.location.reload()
   } else {
     console.log(false);
   }

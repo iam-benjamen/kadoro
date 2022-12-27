@@ -1,6 +1,7 @@
 import deleteTasks from "./delete_task.js";
 import monitorContainer from "./monitor.js";
 import handleFormOperations from "./handle_form.js";
+import user from "../../getUser.js";
 
 // Add Buttons
 const addBtnCurrent = document.querySelector("#add_current_task");
@@ -35,13 +36,14 @@ let currentValue = "";
 let ongoingValue = "";
 let completedValue = "";
 
+
 //for each of the containers, pull data from local storage and update it
 window.addEventListener("load", () => {
   outputData();
-  const user_name = localStorage.getItem("kadoro_name").split(" ");
-  console.log(user_name)
+  console.log(user)
+  const user_name = user.split(" ");
 
-  if (user_name) {
+  if (user) {
     welcomeUser.textContent = `Welcome ${user_name[1] || user_name[0]}`;
   }
 });
