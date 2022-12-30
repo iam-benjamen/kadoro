@@ -1,7 +1,9 @@
-import deleteTasks from "./delete_task.js";
-import monitorContainer from "./monitor.js";
+import outputData from "./outputData.js"
 import handleFormOperations from "./handle_form.js";
-import user from "../../getUser.js";
+import handleAddClick from "./handleClick.js"
+import user from "../../utils/getUser.js";
+import { auth } from "../../utils/firebase.js";
+import { signOut } from "firebase/auth";
 
 // Add Buttons
 const addBtnCurrent = document.querySelector("#add_current_task");
@@ -29,8 +31,9 @@ const completed_form = document.querySelector(".third_form");
 const completed_field = document.querySelector("#third_input");
 
 //Others
-const containers = document.querySelectorAll(".container-content");
 const welcomeUser = document.querySelector(".welcome");
+const logout = document.querySelector("#logout");
+
 
 let currentValue = "";
 let ongoingValue = "";
@@ -40,7 +43,6 @@ let completedValue = "";
 //for each of the containers, pull data from local storage and update it
 window.addEventListener("load", () => {
   outputData();
-  console.log(user)
   const user_name = user.split(" ");
 
   if (user) {
@@ -48,28 +50,7 @@ window.addEventListener("load", () => {
   }
 });
 
-//Loop through data and output result and apply drag&Drop functionality
-function outputData() {
-  containers.forEach((container) => {
-    const key = container.id.split("_")[0];
-    const content = localStorage.getItem(key).split(",");
 
-    if (!content || content[0] === "") {
-      container.innerHTML = ` <div class="no_task">No tasks here</div>`;
-    } else {
-      content.forEach((item) => {
-        container.innerHTML += `
-          <div class="container-task" draggable="true">
-            <span class="material-symbols-outlined" id="draggable_icon"> drag_handle </span>
-            ${item}
-            <span class="material-symbols-outlined" id="delete_icon"> delete </span>
-          </div>`;
-      });
-    }
-    monitorContainer();
-    deleteTasks(content);
-  });
-}
 
 //Form operations
 handleFormOperations(
@@ -96,26 +77,24 @@ handleFormOperations(
   completedContainer
 );
 
-//Show input field on click and focus auto
-const handleAddClick = (element, input) => {
-  element.addEventListener("click", () => {
-    const current_display = getComputedStyle(input).display;
-
-    current_display == "none"
-      ? (input.style.display = "block")
-      : (input.style.display = "none");
-
-    const inputField = input.children[0][0];
-    inputField.focus();
-  });
-};
 
 handleAddClick(addBtnCurrent, inputCurrent);
 handleAddClick(addBtnOngoing, inputOngoing);
 handleAddClick(addBtnCompleted, inputCompleted);
 
-//Approach
-// 1. Implement CRUD DONE
-// 2. Data Storage DONE
-// 3. Implement Drag and Drop DONE
-// 4. Auth & store
+
+//handle Log out
+logout.addEventListener("click", () => {
+  const baseUrl = window.location.origin;
+
+  signOut(auth)
+    .then(() => {
+      console.log("hi");
+      localStorage.removeItem("user");
+      window.history.pushState({}, "", `${baseUrl}/auth`);
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log("An error occured!");
+    });
+});

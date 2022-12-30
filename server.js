@@ -6,6 +6,12 @@ const app = express();
 const port = 8000;
 
 app.use(logger("dev"));
+
+
+app.get("/", (req, res) => {
+  res.redirect("/auth")
+})
+
 app.use(express.static("auth/dist"));
 app.use(express.static("public/dist"));
 
@@ -22,7 +28,7 @@ app.use((req, res) => {
   res.sendStatus(404);
 });
 
-
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
