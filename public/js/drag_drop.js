@@ -2,8 +2,7 @@ import monitorContainer from "./monitor.js";
 import updateContent from "./update_content.js";
 
 //Implementing Drag and Drop functionality
-function dragDrop(tasks) {
-  
+function dragDrop(tasks) {  
   const containers = document.querySelectorAll(".container-content");
 
   tasks.forEach((item) => {

@@ -12,6 +12,7 @@ export const firebaseConfig = {
   measurementId: "G-DPDFQXY7ZK",
   clientID:
     "692243734013-gk1ung03fmpf2khidc9i7jkucqpjn9kt.apps.googleusercontent.com",
+  databaseURL: "https://kadoro-5161a-default-rtdb.firebaseio.com/",
 };
 
 export const app = initializeApp(firebaseConfig);

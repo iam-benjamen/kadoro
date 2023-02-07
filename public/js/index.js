@@ -89,7 +89,6 @@ logout.addEventListener("click", () => {
 
   signOut(auth)
     .then(() => {
-      console.log("hi");
       localStorage.removeItem("user");
       window.history.pushState({}, "", `${baseUrl}/auth`);
       window.location.reload();

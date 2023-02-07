@@ -10,7 +10,8 @@ export default function outputData() {
     const content = localStorage.getItem(key).split(",");
 
     if (!content || content[0] === "") {
-      container.innerHTML = ` <div class="no_task">No tasks here</div>`;
+      container.innerHTML = 
+      ` <div class="no_task">No tasks here</div>`;
     } else {
       content.forEach((item) => {
         container.innerHTML += `
